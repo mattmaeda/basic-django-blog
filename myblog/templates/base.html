@@ -1,15 +1,17 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html>
 	<head>
 		<title>My Django Blog</title>
-		{% load static %}
 		<link type="text/css" rel="stylesheet" href="{% static 'django_blog.css' %}">
 	</head>
 	<body>
 		<div id="header">
 			<ul id="control-bar">
-				{% if user.is_authenticated %}
+				{% if request.user.is_authenticated %}
 				<li> {{ user.get_username }} </li>
+				<li><a href="/">Home</a></li>
+				<li><a href="/posts/new">New Post</a></li>
 				{% else %}
 				<li><a href="{% url 'admin:login' %}">login</a></li>
 				{% endif %}
