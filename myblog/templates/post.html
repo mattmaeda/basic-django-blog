@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+  <script>
+    $(function() {
+      $( ".datepicker" ).datepicker({
+        changeMonth: true,
+        changeYear: true,
+        yearRange: "2018:2018",
+        // You can put more options here.
+
+      });
+    });
+  </script>
+  <h3>Enter Your Post</h3>
+
+  {% if error is not None %}
+    <p>{{error}}</p>
+  {% endif %}
+  {% if message is not None %}
+    <p>{{message}}</p>
+  {% endif %}
+  <form method="post" action="">
+		{% csrf_token %}
+		{% for field in form.visible_fields %}
+			{{ field.label_tag }} {{ field }}<br />
+		{% endfor %}
+		<input type="submit">
+  </form>
+{% endblock %}
