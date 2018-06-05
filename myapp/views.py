@@ -3,9 +3,11 @@ from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.template import loader
 from django.http import HttpResponse, HttpResponseRedirect, Http404
+from rest_framework import viewsets
 
 from myapp.models import Post
 from myapp.forms import PostForm, CategoryForm
+from myapp.serializers import PostSerializer
 
 
 def list_view(request):
@@ -14,7 +16,7 @@ def list_view(request):
     template = loader.get_template('list.html')
     context = {'posts': posts}
     body = template.render({'posts': posts})
-    return HttpResponse(body, content_type="text/html")
+    return render(request, 'list.html', context)
 
 
 def detail_view(request, post_id):
@@ -47,3 +49,8 @@ def create_view(request):
     return render(request, 'post.html', {'form': form,
                                          'error': error,
                                          'message': message})
+
+
+class PostViewSet(viewsets.ModelViewSet):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
